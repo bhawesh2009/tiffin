@@ -120,5 +120,5 @@ export default function MapScreen(props) {
     </div>
   ) : (
     <LoadingBox></LoadingBox>
-  );
+  )
 }

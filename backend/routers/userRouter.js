@@ -3,7 +3,7 @@ import expressAsyncHandler from 'express-async-handler';
 import bcrypt from 'bcryptjs';
 import data from '../data.js';
 import User from '../models/userModel.js';
-import { generateToken, isAdmin, isAuth } from '../utils.js';
+import { generateToken, isAdmin, isAuth,isSeller } from '../utils.js';
 
 const userRouter = express.Router();
 
@@ -112,7 +112,6 @@ userRouter.get(
   '/',
   isAuth,
   isAdmin,
-  isSeller,
   expressAsyncHandler(async (req, res) => {
     const users = await User.find({});
     res.send(users);
@@ -142,7 +141,6 @@ userRouter.put(
   '/:id',
   isAuth,
   isAdmin,
-  isSeller,
   expressAsyncHandler(async (req, res) => {
     const user = await User.findById(req.params.id);
     if (user) {
@@ -150,7 +148,8 @@ userRouter.put(
       user.email = req.body.email || user.email;
       user.isSeller = Boolean(req.body.isSeller);
       user.isAdmin = Boolean(req.body.isAdmin);
-      // user.isAdmin = req.body.isAdmin || user.isAdmin;
+       user.isAdmin = req.body.isAdmin || user.isAdmin;
+       user.isSeller = req.body.isSeller || user.isSeller;
       const updatedUser = await user.save();
       res.send({ message: 'User Updated', user: updatedUser });
     } else {

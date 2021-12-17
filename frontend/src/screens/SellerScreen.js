@@ -56,7 +56,7 @@ export default function SellerScreen(props) {
             <li>
               <a href={`mailto:${user.email}`}>Contact Seller</a>
             </li>
-            <li>{user.seller.description}</li>
+            <li>{user.seller?.description}</li>
           </ul>
         )}
       </div>

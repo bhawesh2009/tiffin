@@ -110,6 +110,9 @@ function App() {
                   Seller <i className="fa fa-caret-down"></i>
                 </Link>
                 <ul className="dropdown-content">
+                <li>
+                    <Link to="/dashboard">Dashboard</Link>
+                  </li>
                   <li>
                     <Link to="/productlist/seller">Products</Link>
                   </li>
@@ -248,9 +251,18 @@ function App() {
             component={ProductListScreen}
           ></SellerRoute>
           <SellerRoute
+            path="/productlist/pageNumber/:pageNumber"
+            component={ProductListScreen}
+            exact
+          ></SellerRoute>
+          <SellerRoute
             path="/orderlist/seller"
             component={OrderListScreen}
           ></SellerRoute>
+          <SellerRoute
+            path="/dashboard"
+            component={DashboardScreen}
+          ></SellerRoute><SellerRoute path="/support" component={SupportScreen}></SellerRoute>
 
           <Route path="/" component={HomeScreen} exact></Route>
         </main>

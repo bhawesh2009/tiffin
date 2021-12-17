@@ -28,7 +28,7 @@ productRouter.get(
     const nameFilter = name ? { name: { $regex: name, $options: 'i' } } : {};
     const sellerFilter = seller ? { seller } : {};
     const categoryFilter = category ? { category } : {};
-    const priceFilter = min && max ? { price: { $gte: min, $lte: max } } : {};
+    const priceFilter = min && max ? { price: { Rsgte: min, Rslte: max } } : {};
     const ratingFilter = rating ? { rating: { $gte: rating } } : {};
     const sortOrder =
       order === 'lowest'
