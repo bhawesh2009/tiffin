@@ -29,6 +29,7 @@ import LoadingBox from './components/LoadingBox';
 import MessageBox from './components/MessageBox';
 import MapScreen from './screens/MapScreen';
 import DashboardScreen from './screens/DashboardScreen';
+import SellerDashbaord from './screens/SellerDashboard';
 import SupportScreen from './screens/SupportScreen';
 import ChatBox from './components/ChatBox';
 
@@ -259,11 +260,11 @@ function App() {
             path="/orderlist/seller"
             component={OrderListScreen}
           ></SellerRoute>
-          <SellerRoute
-            path="/dashboard"
-            component={DashboardScreen}
-          ></SellerRoute><SellerRoute path="/support" component={SupportScreen}></SellerRoute>
-
+           <SellerRoute
+            path="/sellerdashboard"
+            component={SellerDashbaord}
+          ></SellerRoute>
+         
           <Route path="/" component={HomeScreen} exact></Route>
         </main>
         <footer className="row center">

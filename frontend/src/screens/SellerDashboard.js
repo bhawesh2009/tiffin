@@ -4,18 +4,30 @@ import Chart from 'react-google-charts';
 import { summaryOrder } from '../actions/orderActions';
 import LoadingBox from '../components/LoadingBox';
 import MessageBox from '../components/MessageBox';
+import { detailsUser } from '../actions/userActions';
+import { listProducts } from '../actions/productActions';
 
-export default function DashboardScreen() {
+export default function SellerDashbaord(props) {
+  const sellerId = props.match.params.id;
+  const userDetails = useSelector((state) => state.userDetails);
+  const { loading, user } = userDetails;
   const orderSummary = useSelector((state) => state.orderSummary);
-  const { loading, summary, error } = orderSummary;
+  const {  summary, error } = orderSummary;
+ 
   const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(detailsUser(sellerId));
+    dispatch(listProducts({ seller: sellerId }));
+  }, [dispatch, sellerId]);
+ 
+
   useEffect(() => {
     dispatch(summaryOrder());
   }, [dispatch]);
   return (
     <div>
       <div className="row">
-        <h1>Dashboard</h1>
+        <h1>Seller Dashboard</h1>
       </div>
       {loading ? (
         <LoadingBox />
@@ -30,7 +42,7 @@ export default function DashboardScreen() {
                   <i className="fa fa-users" /> Users
                 </span>
               </div>
-              <div className="summary-body">{summary.users[0].numUsers}</div>
+              <div className="summary-body">{summary?.users[0].numUsers}</div>
             </li>
             <li>
               <div className="summary-title color2">
@@ -39,7 +51,7 @@ export default function DashboardScreen() {
                 </span>
               </div>
               <div className="summary-body">
-                {summary.orders[0] ? summary.orders[0].numOrders : 0}
+                {summary?.orders[0] ? summary?.orders[0].numOrders : 0}
               </div>
             </li>
             <li>
@@ -50,8 +62,8 @@ export default function DashboardScreen() {
               </div>
               <div className="summary-body">
               Rs
-                {summary.orders[0]
-                  ? summary.orders[0]?.totalSales.toFixed(2)
+                {summary?.orders[0]
+                  ? summary?.orders[0]?.totalSales.toFixed(2)
                   : 0}
               </div>
             </li>
@@ -59,7 +71,7 @@ export default function DashboardScreen() {
           <div>
             <div>
               <h2>Sales</h2>
-              {summary.dailyOrders.length === 0 ? (
+              {summary.seller.dailyOrders.length === 0 ? (
                 <MessageBox>No Sale</MessageBox>
               ) : (
                 <Chart
